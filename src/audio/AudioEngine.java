@@ -6,11 +6,14 @@ import javax.sound.sampled.*;
 
 
 public class AudioEngine {
-    File clap = new File("src/samples/clap.wav");
+    private File sound;
 
+    public AudioEngine(File sound){
+        this.sound = sound;
+    }
     public void playSound() throws RuntimeException {
         try {
-            AudioInputStream stream = AudioSystem.getAudioInputStream(clap);
+            AudioInputStream stream = AudioSystem.getAudioInputStream(sound);
 
             Clip clip = AudioSystem.getClip();
 
