@@ -1,4 +1,5 @@
 import audio.AudioEngine;
+import screen.Screen;
 import sequencer.Pattern;
 import java.io.File;
 
@@ -12,6 +13,7 @@ public class Main {
         simple.toggleStep(7);
         simple.printPattern();
         simple.clapper();
+        Screen screen = new Screen();
     }
 
 

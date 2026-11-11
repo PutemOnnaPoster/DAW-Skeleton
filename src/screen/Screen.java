@@ -1,5 +1,67 @@
 package screen;
 
 
-public class Screen {
+import audio.AudioEngine;
+import sequencer.Pattern;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+
+import java.io.File;
+
+
+public class Screen extends Application {
+    private Rectangle[] nodes = new Rectangle[32];
+    File clapFile = new File("src/samples/clap.wav");
+    AudioEngine clap = new AudioEngine(clapFile);
+    Pattern pattern = new Pattern(clap, 147);
+    boolean[] steps = pattern.getSteps();
+    public Screen() {
+
+    }
+    @Override
+    public void start(Stage stage) {
+
+        Pane root = new Pane();
+
+        for (int i = 0; i < 32; i++) {
+            int x = 50 + i * 40;
+            Rectangle node = new Rectangle(x, 50, 30, 30);
+            nodes[i] = node;
+            if (steps[i]) {
+
+                node.setFill(Color.LIGHTGREEN);
+            } else {
+                node.setFill(Color.GRAY);
+            }
+            if(i == pattern.getCurrentStep()) {
+                node.setFill(Color.ALICEBLUE);
+            }
+            root.getChildren().add(node);
+        }
+
+        Scene scene = new Scene(root, 800, 200);
+        stage.setTitle("REDUCTION");
+        stage.setScene(scene);
+
+        stage.show();
+    }
+    public void refresh() {
+        for (int i = 0; i < 32; i++) {
+            if(i == pattern.getCurrentStep()) {
+                nodes[i].setFill(Color.ALICEBLUE);
+            } else if(pattern.getSteps()[i]) {
+                nodes[i].setFill(Color.LIGHTGREEN);
+            } else {
+                nodes[i].setFill(Color.GRAY);
+            }
+        }
+
+    }
+    public static void main(String[] args) {
+        launch(args);
+    }
 }

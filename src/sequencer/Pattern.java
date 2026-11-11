@@ -19,6 +19,12 @@ public class Pattern {
     public boolean[] getSteps() {
         return steps;
     }
+    public int getCurrentStep() {
+        return currentStep;
+    }
+    public int getBpm() {
+        return bpm;
+    }
     public void toggleStep(int step) {
         steps[step] = !steps[step];
     }
