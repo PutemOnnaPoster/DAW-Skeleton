@@ -7,11 +7,16 @@ import java.io.File;
 public class Main {
     public static void main(String[] args) {
         File kickFile = new File("src/samples/kick.wav");
+        File clapFile = new File("src/samples/clap.wav");
 
         AudioEngine kick = new AudioEngine(kickFile);
+        AudioEngine clap = new AudioEngine(clapFile);
 
-        Pattern simple = new Pattern(kick, 100);
-        Screen.setPattern(simple);
+        Pattern[] patterns = {
+                kickPattern,
+                clapPattern
+        }
+        Screen.setPatterns(patterns);
         Application.launch(Screen.class, args);
 
 
