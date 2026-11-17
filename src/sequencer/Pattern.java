@@ -3,18 +3,26 @@ package sequencer;
 import audio.AudioEngine;
 
 public class Pattern {
-    private AudioEngine clap;
+    private AudioEngine kick;
     boolean[] steps = new boolean[32];
     private int currentStep = 0;
     private int bpm;
 
 
-    public Pattern(AudioEngine clap, int bpm) {
-        this.clap = clap;
+    public Pattern(AudioEngine kick, int bpm) {
+        this.kick = kick;
         this.bpm = bpm;
-        for (int i = 2; i < 32; i += 4) {
-            steps[i] = true;
-        }
+            steps[0] = true;
+            steps[4] = true;
+            steps[8] = true;
+            steps[11] = true;
+            steps[14] = true;
+            steps[16] = true;
+            steps[20] = true;
+            steps[24] = true;
+            steps[27] = true;
+            steps[30] = true;
+
     }
     public boolean[] getSteps() {
         return steps;
@@ -41,22 +49,14 @@ public class Pattern {
 
         }
     }
-    public void clapper() throws RuntimeException {
-        while(true) {
-            try {
-                if (steps[currentStep]) {
-                    clap.playSound();
-                }
-                currentStep++;
-                double milis = 60000.0 / bpm;
-                Thread.sleep((long) milis);
-                if (currentStep == 32) {
-                    currentStep = 0;
-                }
+    public void stepper() throws RuntimeException {
+        if (steps[currentStep]) {
+            kick.playSound();
+        }
+        currentStep++;
 
-            } catch (InterruptedException e) {
-                throw new RuntimeException();
-            }
+        if (currentStep == 32) {
+            currentStep = 0;
         }
     }
 

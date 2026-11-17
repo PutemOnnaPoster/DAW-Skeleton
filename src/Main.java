@@ -1,19 +1,20 @@
 import audio.AudioEngine;
+import javafx.application.Application;
 import screen.Screen;
 import sequencer.Pattern;
 import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-        File clapFile = new File("src/samples/clap.wav");
-        AudioEngine clap = new AudioEngine(clapFile);
+        File kickFile = new File("src/samples/kick.wav");
 
-        Pattern simple = new Pattern(clap, 147);
-        simple.printPattern();
-        simple.toggleStep(7);
-        simple.printPattern();
-        simple.clapper();
-        Screen screen = new Screen();
+        AudioEngine kick = new AudioEngine(kickFile);
+
+        Pattern simple = new Pattern(kick, 100);
+        Screen.setPattern(simple);
+        Application.launch(Screen.class, args);
+
+
     }
 
 
