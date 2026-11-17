@@ -2,6 +2,7 @@ package screen;
 
 
 import audio.AudioEngine;
+import javafx.scene.control.Button;
 import sequencer.Pattern;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import javafx.animation.AnimationTimer;
 public class Screen extends Application {
     private static Pattern pattern;
     private Rectangle[] nodes = new Rectangle[32];
+    private boolean playing = false;
 
 
 
@@ -30,11 +32,32 @@ public class Screen extends Application {
     public void start(Stage stage) {
         boolean[] steps = pattern.getSteps();
         Pane root = new Pane();
+        Button playButton = new Button("|>");
+        Button restart = new Button("|<");
+        restart.setLayoutX(30);
+        restart.setOnAction(e -> {
+            pattern.reset();
+            refresh();
+        });
+        root.getChildren().add(restart);
+        playButton.setOnAction(e -> {
+            playing = !playing;
+
+            if (playing) {
+                playButton.setText("| |");
+            } else {
+                playButton.setText("|>");
+            }
+        });
+        root.getChildren().add(playButton);
 
         for (int i = 0; i < 32; i++) {
+            final int step = i;
             int x = 50 + i * 40;
             Rectangle node = new Rectangle(x, 50, 30, 30);
+
             nodes[i] = node;
+
             if (steps[i]) {
 
                 node.setFill(Color.LIGHTGREEN);
@@ -44,6 +67,10 @@ public class Screen extends Application {
             if(i == pattern.getCurrentStep()) {
                 node.setFill(Color.ALICEBLUE);
             }
+            node.setOnMouseClicked(e -> {
+                pattern.toggleStep(step);
+                refresh();
+            });
             root.getChildren().add(node);
         }
 
@@ -58,7 +85,7 @@ public class Screen extends Application {
 
             @Override
             public void handle(long now) {
-                if (now - lastUpdate > nanosPerBeat) {
+                if (playing && now - lastUpdate > nanosPerBeat) {
                     pattern.stepper();
                     refresh();
                     lastUpdate = now;

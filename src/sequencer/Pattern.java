@@ -33,6 +33,9 @@ public class Pattern {
     public int getBpm() {
         return bpm;
     }
+    public void reset() {
+        currentStep = 0;
+    }
     public void toggleStep(int step) {
         steps[step] = !steps[step];
     }
