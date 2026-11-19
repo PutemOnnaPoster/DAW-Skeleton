@@ -3,14 +3,15 @@ package sequencer;
 import audio.AudioEngine;
 
 public class Pattern {
-    private AudioEngine kick;
+    private AudioEngine sound;
     boolean[] steps = new boolean[32];
     private int currentStep = 0;
+    private boolean trueStep;
     private int bpm;
 
 
-    public Pattern(AudioEngine kick, int bpm) {
-        this.kick = kick;
+    public Pattern(AudioEngine sound, int bpm) {
+        this.sound = sound;
         this.bpm = bpm;
             steps[0] = true;
             steps[4] = true;
@@ -54,7 +55,7 @@ public class Pattern {
     }
     public void stepper() throws RuntimeException {
         if (steps[currentStep]) {
-            kick.playSound();
+            sound.playSound();
         }
         currentStep++;
 
