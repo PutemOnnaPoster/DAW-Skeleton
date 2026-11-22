@@ -34,25 +34,16 @@ public class Pattern {
     public int getBpm() {
         return bpm;
     }
+    public void setBpm(int bpm) {
+        this.bpm = bpm;
+    }
     public void reset() {
         currentStep = 0;
     }
     public void toggleStep(int step) {
         steps[step] = !steps[step];
     }
-    public void printPattern() {
-        for (int i = 0; i < 32; i++) {
-            if (i % 4 == 0) {
-                System.out.println();
-            }
-            if (steps[i]) {
-                System.out.print("[X]");
-            } else {
-                System.out.print("[ ]");
-            }
 
-        }
-    }
     public void stepper() throws RuntimeException {
         if (steps[currentStep]) {
             sound.playSound();

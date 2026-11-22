@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.animation.AnimationTimer;
+import javafx.scene.control.TextField;
 
 
 
@@ -33,6 +34,27 @@ public class Screen extends Application {
 
             boolean[] steps = patterns[0].getSteps();
             Pane root = new Pane();
+            TextField bpmField = new TextField();
+
+            bpmField.setText(String.valueOf(patterns[0].getBpm()));
+            bpmField.setLayoutX(60);
+            root.getChildren().add(bpmField);
+
+            bpmField.setOnAction(e -> {
+                try {
+                    int bpm = Integer.parseInt(bpmField.getText());
+
+                    for (Pattern pattern : patterns) {
+                        pattern.setBpm(bpm);
+                    }
+                    System.out.println(patterns[0].getBpm()
+                    );
+                } catch(NumberFormatException nfe) {
+                    bpmField.setText(String.valueOf(patterns[0].getBpm())
+                    );
+
+                }
+            });
             Button playButton = new Button("|>");
             Button restart = new Button("|<");
             restart.setLayoutX(30);
@@ -63,7 +85,7 @@ public class Screen extends Application {
             boolean[] row = pattern.getSteps();
             for (int step = 0; step < pattern.getSteps().length ; step++) {
                 final int currentStep = step;
-                int x = 50 + step * 40;
+                int x = 10 + step * 40;
                 int y = 50 + track * 40;
                 Rectangle node = new Rectangle(x, y, 30, 30);
 
@@ -85,6 +107,7 @@ public class Screen extends Application {
                     refresh();
                 });
                 root.getChildren().add(node);
+
             }
         }
 
@@ -93,13 +116,14 @@ public class Screen extends Application {
         stage.setScene(scene);
 
         stage.show();
-        long nanosPerBeat = 15_000_000_000L / patterns[0].getBpm();
+
         AnimationTimer timer = new AnimationTimer() {
             private long lastUpdate = 0;
 
             @Override
             public void handle(long now) {
-                if (playing && now - lastUpdate > nanosPerBeat) {
+                long nanosPerStep = 15_000_000_000L / patterns[0].getBpm();
+                if (playing && now - lastUpdate > nanosPerStep) {
                     for(int track = 0; track < patterns.length; track++) {
                         patterns[track].stepper();
 
