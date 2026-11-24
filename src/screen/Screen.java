@@ -32,7 +32,6 @@ public class Screen extends Application {
     public void start(Stage stage) {
 
 
-            boolean[] steps = patterns[0].getSteps();
             Pane root = new Pane();
             TextField bpmField = new TextField();
 

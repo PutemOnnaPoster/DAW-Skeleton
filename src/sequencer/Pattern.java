@@ -6,24 +6,15 @@ public class Pattern {
     private AudioEngine sound;
     boolean[] steps = new boolean[32];
     private int currentStep = 0;
-    private boolean trueStep;
     private int bpm;
 
 
     public Pattern(AudioEngine sound, int bpm) {
         this.sound = sound;
         this.bpm = bpm;
-            steps[0] = true;
-            steps[4] = true;
-            steps[8] = true;
-            steps[11] = true;
-            steps[14] = true;
-            steps[16] = true;
-            steps[20] = true;
-            steps[24] = true;
-            steps[27] = true;
-            steps[30] = true;
-
+        for (int i = 0; i < steps.length; i += 4) {
+            steps[i] = true;
+        }
     }
     public boolean[] getSteps() {
         return steps;
