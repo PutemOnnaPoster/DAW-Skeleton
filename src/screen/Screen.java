@@ -46,8 +46,7 @@ public class Screen extends Application {
                     for (Pattern pattern : patterns) {
                         pattern.setBpm(bpm);
                     }
-                    System.out.println(patterns[0].getBpm()
-                    );
+
                 } catch(NumberFormatException nfe) {
                     bpmField.setText(String.valueOf(patterns[0].getBpm())
                     );
